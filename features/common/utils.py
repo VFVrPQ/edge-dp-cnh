@@ -38,9 +38,9 @@ def translate(datafile, newDatafile):
     fin.close() 
 
 # 用于区分时当前文件测试运行，还是项目根目录运行
-dataDir = "../../datasets/" # expes/2002-2.../目录运行
+dataDir = "../../expes/2001.ladder/Datasets/" # expes/2002-2.../目录运行
 if IS_CUR_FILE_RUN: # 当前文件运行
-    dataDir = '../../datasets/'
+    dataDir = '../../expes/2001.ladder/Datasets/'
 
 # 根据数据集得到真实的hist
 def getTrueHist(dataKey):

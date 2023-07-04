@@ -1,22 +1,15 @@
-DATA_NAMES = ["toydata", "facebook_combined", "wiki-Vote", 
-    "CA-GrQc",
-    "email-Enron",  
-    "cit-HepTh",  # memory error
-    'deezer_europe_edges',
-    'musae_git_edges',
-    'CA-HepPh',
-    'CA-CondMat',
-    'email-Eu-core',
+DATA_NAMES = [
+    "toydata", 
     'Cit-HepPh',
-    'musae_chameleon_edges',
-    'musae_squirrel_edges',
-    'musae_PTBR_edges',
-    'mytoydata',
-    # "com-dblp.ungraph"
+    "wiki-Vote",
+    "email-Enron", 
+    "cit-HepTh",
+    'musae_git_edges',
+    'musae_chameleon_edges'
 ]
 
 # 数据集列表
-DATASET_LIST = [11, 2, 4, 5, 7, 12]
+DATASET_LIST = [1, 2, 3, 4, 5, 6]
 # 我的示例图
 MYTOYDATA_INDEX = 15
 
