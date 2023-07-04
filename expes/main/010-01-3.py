@@ -5,8 +5,9 @@ import networkx as nx
 import numpy as np
 
 sys.path.append('../../')
-from features.DP.models.edgeDP import GraphStatCommonNeighbors
+from features.common.constants import DATA_NAMES, DATASET_LIST
 
+from features.DP.models.edgeDP import GraphStatCommonNeighbors
 from features.DP.models.edgeDPDegreeDistribution import EdgeDPCommonNeighborDistributionLaplaceCumulateHistogram, EdgeDPCommonNeighborDistributionLaplaceCumulateHistogramTruncated
 from features.DP.models.edgeDPCommonNeighborsDistribution20022 import EdgeDPCommonNeighborDistributionSequenceThreeStagesLL20022
 from features.DP.models.edgeDPCommonNeighborsDistribution20022 import EdgeDPCommonNeighborDistributionAnonHist_paper_L1
@@ -54,22 +55,8 @@ def caller(dataKey, queryKey, partition=None):
         partition是专门为twoStage设置的
     '''
     dataDir ="../2001.ladder/Datasets/"
-    dataNames = ["toydata", "facebook_combined", "wiki-Vote", 
-            "CA-GrQc",
-            "email-Enron",  
-            "cit-HepTh",  # memory error
-            'deezer_europe_edges',
-            'musae_git_edges',
-            'CA-HepPh',
-            'CA-CondMat',
-            'email-Eu-core',
-            'Cit-HepPh',
-            'musae_chameleon_edges',
-            'musae_squirrel_edges',
-            'musae_PTBR_edges'
-            # "com-dblp.ungraph"
-            ]
-    # dataKey = int(sys.argv[1])
+
+    dataNames = DATA_NAMES
     dataName = dataNames[dataKey]
     print(dataName)
 
@@ -198,7 +185,8 @@ def caller(dataKey, queryKey, partition=None):
 
 caller(0, 1)
 
-for dataKey in [1, 2, 4, 5, 7, 12]:
+for dataKey in [6]:
+# for dataKey in DATASET_LIST:
     for queryKey in range(1, 2):
         epsList, errorsList, histEMDErrorsList, L1ErrorsList, KSErrorsList = caller(dataKey=dataKey, queryKey=queryKey)
         print('dataKey={}, queryKey={} :'.format(dataKey, queryKey))#, errorsList, L1ErrorsList)
