@@ -7,8 +7,9 @@ download and put the datasets into `expes/2001.ladder/Datasets`
 ## how to run
 
 ```
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
+改镜像：-i https://pypi.tuna.tsinghua.edu.cn/simple
 
 `expes/main`，run
 ```

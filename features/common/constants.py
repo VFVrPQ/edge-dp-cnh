@@ -8,6 +8,16 @@ DATA_NAMES = [
     'musae_chameleon_edges'
 ]
 
+DATA_NODES_NUMBER = [
+    0,
+    34546,
+    7115,
+    36692,
+    27770,
+    37700,
+    2277,
+]
+
 # 数据集列表
 DATASET_LIST = [1, 2, 3, 4, 5, 6]
 # 我的示例图

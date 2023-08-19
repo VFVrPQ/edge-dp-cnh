@@ -9,6 +9,10 @@ processed/
 *.whl
 __MACOSX/
 output/010-02-2/
+test/
+data/
+result/
+result copy/
 
 # experiments/
 

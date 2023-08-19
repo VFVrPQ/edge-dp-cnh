@@ -1,4 +1,3 @@
-from turtle import left
 import numpy as np  
 from sklearn.isotonic import IsotonicRegression
 
