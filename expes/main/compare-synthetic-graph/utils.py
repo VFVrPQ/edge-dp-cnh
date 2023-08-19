@@ -105,6 +105,15 @@ def readFile(filePath):
     with open(filePath, 'rb') as file:
         return pickle.load(file)
 
+def refineList(mylist, deletedNum=2):
+    ''' 去除最大的2个和最小的2个
+    '''
+    sorted_list = list(sorted(mylist))
+    new_list = []
+    for i in range(deletedNum, len(sorted_list)-deletedNum):
+        new_list.append(sorted_list[i])
+    return new_list
+
 def getEdgesFromFile(filePath):
     """
         从文件中读取边的数据。
