@@ -3,7 +3,7 @@ import math
 import subprocess
 import networkx as nx
 from utils import is_number, extract_lines_with_two_numbers, nearest_power_of_2
-from utils import remove_nodes_with_min_degree, generateAGraphFromEdges
+from utils import remove_nodes_with_min_degree, remove_random_edges, generateAGraphFromEdges
 from utils import readFile, writeFile, getEdgesFromFile
 from utils import GraphStatCommonNeighbors
 
@@ -48,7 +48,7 @@ def generateEdges(nodeNum, intNumber, filePath):
     # print('not exists data', data)
   return edgeData
 
-def generateAGraph(nodeNum, intNumber, index=None, originalNodeNum=None, datasetName=None):
+def generateAGraph(nodeNum, intNumber, index=None, originalNodeNum=None, originalEdgeNum=None, datasetName=None):
     """
     根据给定的节点数和边数生成一个图，并进行节点的重命名和统计。
     
@@ -79,8 +79,11 @@ def generateAGraph(nodeNum, intNumber, index=None, originalNodeNum=None, dataset
     G = generateAGraphFromEdges(edgeData, nodes=[i for i in range(2**nodeNum)])
     if originalNodeNum != None:
       G = remove_nodes_with_min_degree(G, len(G.nodes()) - originalNodeNum)
-      # 重新命名节点标签
-      G = nx.relabel_nodes(G, {node: i for i, node in enumerate(list(G.nodes))})
+    if originalEdgeNum != None:
+      G = remove_random_edges(G, max(0, len(G.edges()) - originalEdgeNum))
+    # 重新命名节点标签
+    G = nx.relabel_nodes(G, {node: i for i, node in enumerate(list(G.nodes))})
+    print('[generateAGraph-originalNodeNum] nodeNum={}, edgeNum={}, expectedEdgeNum={}'.format(len(G.nodes()), len(G.edges()), originalEdgeNum))
     return GraphStatCommonNeighbors(G)
 
 
@@ -103,7 +106,7 @@ def runEachCase(datasetName, gs, index):
   # 每个节点有多少度，应该是看扩展后的
   newIntNumber = math.ceil(gs.edgesNum * 2 / (2**newNodeNum))
   print('[runEachCase] newNodeNum={}, newIntNumber={}'.format(newNodeNum, newIntNumber))
-  synGs = generateAGraph(newNodeNum, newIntNumber, index=index, originalNodeNum=gs.nodesNum, datasetName=datasetName)
+  synGs = generateAGraph(newNodeNum, newIntNumber, index=index, originalNodeNum=gs.nodesNum, originalEdgeNum=gs.edgesNum, datasetName=datasetName)
 
   # 计算EMD of common neighbor count sequence
   return DistributionMetrics.normalizedEMD(gs.hist, synGs.hist)
@@ -113,7 +116,7 @@ folderName = './result'
 def main(dataName, CASE):
   # 使用真实数据作为original graph
   datasetNameMap = datasetName + '-map.txt'
-  print('[main] datasetNameMap={}'.format(datasetNameMap))
+  print('\n[main] datasetNameMap={}'.format(datasetNameMap))
   edges = getEdgesFromFile('../../2001.ladder/Datasets/' + datasetNameMap)
   gs = GraphStatCommonNeighbors(generateAGraphFromEdges(edges))
 
@@ -127,11 +130,11 @@ def main(dataName, CASE):
     print('[main] dataName={}, index={}'.format(dataName, index))
     res = runEachCase(dataName, gs, index)
     resultList.append(res)
-    writeFile(filePath)
+    writeFile(filePath, resultList)
   return resultList, CASE
 
 # for i in range(len(DATASET_LIST)):
-for i in [1, 5, 2, 3, 4]:
+for i in [1, 5, 2, 3, 4, 0]:
   datasetName = DATA_NAMES[DATASET_LIST[i]]
   resultList, _ = main(datasetName, CASE=CASE)
   print('[final] datasetName={}, resultList={}'.format(datasetName, resultList))
